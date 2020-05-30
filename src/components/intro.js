@@ -1,17 +1,6 @@
-import React from "react"
+import React, { useEffect } from "react"
 import styled, { keyframes } from "styled-components"
 import "typeface-source-sans-pro"
-
-const IntroContainer = styled.div`
-  height: 100vh;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  font-family: "Source Sans Pro", sans-serif;
-  align-items: center;
-  overflow-x:hidden;
-`
 
 // Create the keyframes
 const translateLeft = keyframes`
@@ -24,17 +13,15 @@ const translateLeft = keyframes`
     transform:  translate(30px,0px)  ;
   }
   80% {
+    opacity:1;
     transform:  translate(-10px,0px)  ;
   }
-
 
   100% {
     opacity:1;
     transform:  translate(0px,0px)  ;
   }
 `
-
-// Create the keyframes
 const translateRight = keyframes`
 0% {
     opacity:0;
@@ -45,12 +32,88 @@ const translateRight = keyframes`
     transform:  translate(-30px,0px)  ;
   }
   80% {
+    opacity:1;
     transform:  translate(10px,0px)  ;
   }
   100% {
     opacity:1;
-    transform:  translate(0px,0px)  ;
+    transform:  translate(0px,0px);
   }
+`
+
+
+const scaleAnimation = keyframes`
+0% {
+  opacity:1;
+  transform:  scaleX(1.00) scaleY(1.00) ;
+}
+25% {
+  opacity:1;
+  transform:  scaleX(0.95) scaleY(0.95) ;
+}
+50% {
+  opacity:1;
+  transform:  scaleX(100) scaleY(100) ;
+}
+100% {
+  opacity:1;
+  transform:  scaleX(999.9) scaleY(999.9) 
+}
+`
+
+const scaleToZero = keyframes`
+0% {
+  opacity:1;
+  transform:  scaleX(1.00) scaleY(1.00) ;
+}
+99.9%{
+  opacity:1;
+  transform:  scaleX(1.00) scaleY(1.00) ;
+}
+100% {
+  opacity:0;
+  transform:  scaleX(0) scaleY(0) 
+}
+`
+
+const backgroundAnimation = keyframes`
+0% {
+  background:#000;
+  border:none;
+  color:#fff
+}
+25%{
+  background:#fff;
+  border:5px solid #000;
+  color:#000
+}
+50% {
+  background:#000;
+  border:none;
+  color:#fff
+}
+75% {
+  background:#fff;
+  border:5px solid #000;
+  color:#000 
+}
+100% {
+  background:#fff;
+  border:5px solid #000;
+  color:#000 
+}
+`
+const IntroContainer = styled.div`
+  height: 100vh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Source Sans Pro", sans-serif;
+  align-items: center;
+  overflow: hidden;
+  display: flex;
+  transform:scaleX(0) scaleY(0);
+  animation: ${scaleToZero} 2.625s ease;
 `
 
 const LeftLetter = styled.div`
@@ -59,32 +122,55 @@ const LeftLetter = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  animation: ${translateLeft} 0.8s ease-out;
+  animation: ${translateLeft} 1s ease,${scaleAnimation} 0.5s ease-out 2.125s;
+    
 `
 const RightLetter = styled(LeftLetter)`
-  animation: ${translateRight} 0.8s ease-out;
+  animation: ${translateRight} 1s ease,${scaleAnimation} 0.5s ease-out 2.125s;
+    
+`
+
+const LetterBackDiv = styled.div`
+  height: 300px;
+  width: 300px;
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  animation:${backgroundAnimation} 1.5s ease 1s;
+  @media (max-width: 768px) {
+    height: 150px;
+    width: 150px;
+  }
 `
 
 const Letter = styled.p`
   font-size: 300px;
-  color: #fff;
-  background: #000;
   margin: 0;
   padding: 0;
-  width: 300px;
-  height: 300px;
   display: flex;
   align-items: center;
   justify-content: center;
+  @media (max-width: 768px) {
+    font-size: 150px;
+  }
 `
 
-export const Intro = () => (
-  <IntroContainer>
-    <LeftLetter>
-      <Letter>Y</Letter>
-    </LeftLetter>
-    <RightLetter>
-      <Letter>K</Letter>
-    </RightLetter>
-  </IntroContainer>
-)
+export const Intro = () => {
+
+  return (
+    <IntroContainer id="IntroContainer">
+      <LeftLetter>
+        <LetterBackDiv>
+          <Letter>Y</Letter>
+        </LetterBackDiv>
+      </LeftLetter>
+      <RightLetter>
+        <LetterBackDiv>
+          <Letter>K</Letter>
+        </LetterBackDiv>
+      </RightLetter>
+    </IntroContainer>
+  )
+}
