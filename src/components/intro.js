@@ -41,7 +41,6 @@ const translateRight = keyframes`
   }
 `
 
-
 const scaleAnimation = keyframes`
 0% {
   opacity:1;
@@ -58,21 +57,6 @@ const scaleAnimation = keyframes`
 100% {
   opacity:1;
   transform:  scaleX(999.9) scaleY(999.9) 
-}
-`
-
-const scaleToZero = keyframes`
-0% {
-  opacity:1;
-  transform:  scaleX(1.00) scaleY(1.00) ;
-}
-99.9%{
-  opacity:1;
-  transform:  scaleX(1.00) scaleY(1.00) ;
-}
-100% {
-  opacity:0;
-  transform:  scaleX(0) scaleY(0) 
 }
 `
 
@@ -103,6 +87,8 @@ const backgroundAnimation = keyframes`
   color:#000 
 }
 `
+
+// create JSX elemets used Styled Components
 const IntroContainer = styled.div`
   height: 100vh;
   width: 100%;
@@ -112,8 +98,6 @@ const IntroContainer = styled.div`
   align-items: center;
   overflow: hidden;
   display: flex;
-  transform:scaleX(0) scaleY(0);
-  animation: ${scaleToZero} 2.625s ease;
 `
 
 const LeftLetter = styled.div`
@@ -122,15 +106,13 @@ const LeftLetter = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  animation: ${translateLeft} 1s ease,${scaleAnimation} 0.5s ease-out 2.125s;
-    
+  animation: ${translateLeft} 1s ease, ${scaleAnimation} 0.45s ease-out 2.125s;
 `
 const RightLetter = styled(LeftLetter)`
-  animation: ${translateRight} 1s ease,${scaleAnimation} 0.5s ease-out 2.125s;
-    
+  animation: ${translateRight} 1s ease, ${scaleAnimation} 0.45s ease-out 2.125s;
 `
 
-const LetterBackDiv = styled.div`
+const LetterBox = styled.div`
   height: 300px;
   width: 300px;
   background: #000;
@@ -138,7 +120,7 @@ const LetterBackDiv = styled.div`
   justify-content: center;
   align-items: center;
   color: #fff;
-  animation:${backgroundAnimation} 1.5s ease 1s;
+  animation: ${backgroundAnimation} 1.5s ease-in-out 1s;
   @media (max-width: 768px) {
     height: 150px;
     width: 150px;
@@ -158,18 +140,36 @@ const Letter = styled.p`
 `
 
 export const Intro = () => {
+  // life cycle
+  useEffect(() => {
+    // get intro container element to hide after animation finished
+    const introContainer = document.getElementById("intro-container")
+    // add listener to check the animation is end
+    const introBox = document.getElementById("intro-letter-box")
+    introBox.addEventListener(
+      "animationend",
+      () => {
+        // change the display properity to none 'hide'
+        introContainer.style.display = "none"
+      },
+      false
+    )
+
+    // remove listener
+    return () => introBox.removeEventListener("animationend",introBox)
+  })
 
   return (
-    <IntroContainer id="IntroContainer">
+    <IntroContainer id="intro-container">
       <LeftLetter>
-        <LetterBackDiv>
+        <LetterBox id="intro-letter-box">
           <Letter>Y</Letter>
-        </LetterBackDiv>
+        </LetterBox>
       </LeftLetter>
       <RightLetter>
-        <LetterBackDiv>
+        <LetterBox>
           <Letter>K</Letter>
-        </LetterBackDiv>
+        </LetterBox>
       </RightLetter>
     </IntroContainer>
   )
