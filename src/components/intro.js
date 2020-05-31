@@ -106,10 +106,10 @@ const LeftLetter = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  animation: ${translateLeft} 1s ease, ${scaleAnimation} 0.45s ease-out 2.125s;
+  animation: ${translateLeft} 1s ease, ${scaleAnimation} 0.45s linear 2.125s;
 `
 const RightLetter = styled(LeftLetter)`
-  animation: ${translateRight} 1s ease, ${scaleAnimation} 0.45s ease-out 2.125s;
+  animation: ${translateRight} 1s ease, ${scaleAnimation} 0.45s linear 2.125s;
 `
 
 const LetterBox = styled.div`
