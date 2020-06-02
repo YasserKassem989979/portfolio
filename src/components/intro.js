@@ -1,164 +1,151 @@
-import React, { useEffect } from "react"
+import React from "react"
 import styled, { keyframes } from "styled-components"
 import "typeface-source-sans-pro"
-
 // Create the keyframes
-const translateLeft = keyframes`
-0% {
-    opacity:0;
-    transform:  translate(-1500px,0px)  ;
-  }
-  60% {
-    opacity:1;
-    transform:  translate(30px,0px)  ;
-  }
-  80% {
-    opacity:1;
-    transform:  translate(-10px,0px)  ;
-  }
-
-  100% {
-    opacity:1;
-    transform:  translate(0px,0px)  ;
-  }
-`
-const translateRight = keyframes`
-0% {
-    opacity:0;
-    transform:  translate(1500px,0px)  ;
-  }
-  60% {
-    opacity:1;
-    transform:  translate(-30px,0px)  ;
-  }
-  80% {
-    opacity:1;
-    transform:  translate(10px,0px)  ;
-  }
-  100% {
-    opacity:1;
-    transform:  translate(0px,0px);
-  }
-`
-
-const scaleAnimation = keyframes`
-0% {
-  opacity:1;
-  transform:  scaleX(1.00) scaleY(1.00) ;
+const drawBox = keyframes`
+0%{
+  width:0px;
+  height:0px;
+  border:1px solid #000;
 }
-25% {
-  opacity:1;
-  transform:  scaleX(0.95) scaleY(0.95) ;
-}
-50% {
-  opacity:1;
-  transform:  scaleX(100) scaleY(100) ;
-}
-100% {
-  opacity:1;
-  transform:  scaleX(999.9) scaleY(999.9) 
-}
-`
-
-const backgroundAnimation = keyframes`
-0% {
-  background:#000;
-  border:none;
-  color:#fff
+12.5%{
+  width:300px;
+  height:0px;
+  border:5px solid #000;
 }
 25%{
-  background:#fff;
+  width:300px;
+  height:300px;
   border:5px solid #000;
-  color:#000
 }
-50% {
-  background:#000;
-  border:none;
-  color:#fff
-}
-75% {
-  background:#fff;
+
+75%{
+  width:300px;
+  height:300px;
   border:5px solid #000;
-  color:#000 
 }
-100% {
-  background:#fff;
+87.5%{
+  width:300px;
+  height:0px;
   border:5px solid #000;
-  color:#000 
+}
+100%{
+  width:0px;
+  height:0px;
+  border:1px solid #000;
+}
+`
+const changeLetter = keyframes`
+0%{
+  content:"Y";
+}
+12.5%{
+  content:"Y";
+  font-size:300px;
+}
+25%{
+  content:"Y";
+  font-size:300px;
+}
+37%{
+  content:"Y";
+}
+37.5%{
+  content:"K";
+  font-size:0px;
+}
+50%{
+  content:"K";
+  font-size:300px;
+}
+62.5%{
+  content:"K";
+  font-size:300px;
+}
+75%{
+  content:"K";
+  font-size:0px;
 }
 `
 
 // create JSX elemets used Styled Components
 const IntroContainer = styled.div`
-  height: 100vh;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  font-family: "Source Sans Pro", sans-serif;
-  align-items: center;
-  overflow: hidden;
-  display: flex;
+height: 100vh;
+width: 100%;
+margin: 0;
+padding: 0;
+overflow:hidden;
+font-family: "Source Sans Pro", sans-serif;
+-webkit-box-align: center;
+-ms-flex-align: center;
+align-items: center;
+overflow: hidden;
+display: -webkit-box;
+display: -ms-flexbox;
+display: flex;
 `
 
 const LeftLetter = styled.div`
-  flex: 1;
-  height: 50%;
-  display: flex;
-  justify-content: center;
+-webkit-box-flex: 1;
+-ms-flex: 1;
+flex: 1;
+height: 50%;
+display: -webkit-box;
+display: -ms-flexbox;
+display: flex;
+-webkit-box-pack: center;
+-ms-flex-pack: center;
+justify-content: center;
+-webkit-box-align: center;
+-ms-flex-align: center;
   align-items: center;
-  animation: ${translateLeft} 1s ease, ${scaleAnimation} 0.45s linear 2.125s;
-`
-const RightLetter = styled(LeftLetter)`
-  animation: ${translateRight} 1s ease, ${scaleAnimation} 0.45s linear 2.125s;
 `
 
 const LetterBox = styled.div`
-  height: 300px;
-  width: 300px;
-  background: #000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-  animation: ${backgroundAnimation} 1.5s ease-in-out 1s;
-  @media (max-width: 768px) {
-    height: 150px;
-    width: 150px;
-  }
+height: 0px;
+width: 0px;
+display: -webkit-box;
+display: -ms-flexbox;
+display: flex;
+position: absolute;
+-webkit-transform: translateZ(0);
+-moz-transform: translateZ(0);
+-ms-transform: translateZ(0);
+-o-transform: translateZ(0);
+transform: translateZ(0);
+-webkit-box-pack: center;
+-ms-flex-pack: center;
+justify-content: center;
+-webkit-box-align: center;
+-ms-flex-align: center;
+align-items: center;
+color: #000;
+border: none;
+-webkit-animation: ${drawBox} 4s;
+animation: ${drawBox} 4s;
 `
 
 const Letter = styled.p`
-  font-size: 300px;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  @media (max-width: 768px) {
-    font-size: 150px;
-  }
+font-size:0px;
+margin: 0;
+padding: 0;
+display: -webkit-box;
+display: -ms-flexbox;
+display: flex;
+-webkit-box-align: center;
+ms-flex-align: center;
+align-items: center;
+-webkit-box-pack: center;
+-ms-flex-pack: center;
+justify-content: center;
+&:after {
+  content: "";
+  -webkit-animation: ${changeLetter} 3s 1s ease-in-out;
+   animation: ${changeLetter} 3s 1s ease-in-out;
+}
 `
 
 export const Intro = () => {
-  // life cycle
-  useEffect(() => {
-    // get intro container element to hide after animation finished
-    const introContainer = document.getElementById("intro-container")
-    // add listener to check the animation is end
-    const introBox = document.getElementById("intro-letter-box")
-    introBox.addEventListener(
-      "animationend",
-      () => {
-        // change the display properity to none 'hide'
-        introContainer.style.display = "none"
-      },
-      false
-    )
-
-    // remove listener
-    return () => introBox.removeEventListener("animationend",introBox)
-  })
-
   return (
     <IntroContainer id="intro-container">
       <LeftLetter>
@@ -166,11 +153,6 @@ export const Intro = () => {
           <Letter>Y</Letter>
         </LetterBox>
       </LeftLetter>
-      <RightLetter>
-        <LetterBox>
-          <Letter>K</Letter>
-        </LetterBox>
-      </RightLetter>
     </IntroContainer>
   )
 }
